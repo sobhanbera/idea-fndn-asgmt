@@ -1,4 +1,5 @@
-import {FetchNewsAction, FetchNewsActionTypes, NewsState} from '../types'
+import {createSlice} from '@reduxjs/toolkit'
+import {News, NewsState} from '../types'
 
 export const initialNewsState: NewsState = {
     news: [],
@@ -6,25 +7,23 @@ export const initialNewsState: NewsState = {
     error: null,
 }
 
-export const newsReducer = (
-    state = initialNewsState,
-    action: FetchNewsAction,
-) => {
-    switch (action.type) {
-        case FetchNewsActionTypes.FETCH_NEWS_SUCCESS:
+export const newsSlice = createSlice({
+    name: 'news',
+    initialState: initialNewsState,
+    reducers: {
+        updateNewsData: (
+            state: NewsState,
+            payload: {payload: News[]; type: string},
+        ) => {
             return {
                 ...state,
-                news: action.payload,
+                news: payload.payload,
                 loading: false,
                 error: null,
             }
-        case FetchNewsActionTypes.FETCH_NEWS_FAILURE:
-            return {
-                ...state,
-                loading: false,
-                error: action.payload,
-            }
-        default:
-            return state
-    }
-}
+        },
+    },
+})
+
+export const {updateNewsData} = newsSlice.actions
+export default newsSlice.reducer
