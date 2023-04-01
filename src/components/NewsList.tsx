@@ -3,8 +3,7 @@ import {useSelector} from 'react-redux'
 import {Container} from '@mui/system'
 import {Button, Card, CardActions, CardContent, Typography} from '@mui/material'
 
-import {Categories, News} from '../store'
-import {RootStateType} from '../store/types/store'
+import {Categories, News, NewsState} from '../store'
 import {getFilteresList} from '../utils'
 
 interface NewsListProps {
@@ -13,7 +12,7 @@ interface NewsListProps {
 }
 export function NewsList({categoryId, subCatId}: NewsListProps) {
     // getting the fetched news from the store
-    const {news} = useSelector((state: RootStateType) => state.news)
+    const {news, loading} = useSelector((news: NewsState) => news)
 
     // now we have to get the exact id of the subcategory
     // currently they are set as the assignment required
@@ -42,8 +41,6 @@ export function NewsList({categoryId, subCatId}: NewsListProps) {
                 const newsControllerId = parseInt(subCat[0].id)
                 const data = getFilteresList(news, newsControllerId)
 
-                console.log(newsControllerId)
-
                 setNewsData(data)
             } else {
                 // if the subcategory does not exist
@@ -55,7 +52,7 @@ export function NewsList({categoryId, subCatId}: NewsListProps) {
         } else {
             alert('Category not found')
         }
-    }, [categoryId, subCatId, news])
+    }, [categoryId, subCatId, news, loading])
 
     return (
         <Container>
