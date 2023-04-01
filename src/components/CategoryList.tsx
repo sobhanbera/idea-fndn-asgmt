@@ -19,7 +19,9 @@ export function CategoryList() {
             }}>
             {Categories.map(category => {
                 return (
-                    <Card sx={{minWidth: 275, margin: '20px'}}>
+                    <Card
+                        key={category.id}
+                        sx={{minWidth: 275, margin: '20px'}}>
                         <CardContent>
                             <Typography variant="h5" component="div">
                                 {category.name}

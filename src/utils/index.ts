@@ -9,7 +9,7 @@ import {News} from '../store'
  * @returns filtered list of news
  */
 export function getFilteresList(list: News[], id: number): News[] {
-    if (!list) return []
+    if (!list || list.length <= 0) return []
 
     let news: News[] = []
     let index: number = id

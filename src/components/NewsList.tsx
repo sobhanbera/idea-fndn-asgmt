@@ -47,41 +47,46 @@ export function NewsList({categoryId, subCatId}: NewsListProps) {
                 // we can show the user a message
                 // or redirect him to the main page
                 // show alert in this case
-                alert('Category not found')
+                console.error('Category not found')
             }
         } else {
-            alert('Category not found')
+            console.error('Category not found')
         }
     }, [categoryId, subCatId, news, loading])
 
     return (
-        <Container>
-            {newsData.map(news => {
-                return (
-                    <Card key={news.id} sx={{minWidth: 275, margin: '20px'}}>
-                        <CardContent>
-                            <Typography
-                                sx={{fontSize: 20}}
-                                color="text.secondary"
-                                gutterBottom>
-                                ID: {news.id}
+        <div data-testid="news-cards">
+            <Container>
+                {newsData.map(news => (
+                    <div data-testid="news-card" key={news.id}>
+                        <Card sx={{minWidth: 275, margin: '20px'}}>
+                            <CardContent>
+                                <Typography
+                                    sx={{fontSize: 20}}
+                                    color="text.secondary"
+                                    gutterBottom>
+                                    {`ID: ${news.id}`}
+                                </Typography>
+
                                 <Typography
                                     variant="h5"
                                     component="div"
                                     color="text.primary">
                                     {news.title}
                                 </Typography>
-                            </Typography>
 
-                            <Typography variant="body2">{news.body}</Typography>
-                        </CardContent>
+                                <Typography variant="body2">
+                                    {news.body}
+                                </Typography>
+                            </CardContent>
 
-                        <CardActions>
-                            <Button size="small">Read Later</Button>
-                        </CardActions>
-                    </Card>
-                )
-            })}
-        </Container>
+                            <CardActions>
+                                <Button size="small">Read Later</Button>
+                            </CardActions>
+                        </Card>
+                    </div>
+                ))}
+            </Container>
+        </div>
     )
 }

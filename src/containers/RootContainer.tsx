@@ -10,13 +10,20 @@ import {
     SubCategoryList,
 } from '../components'
 
-export interface RootContainerProps {}
-export const RootContainer = ({}: RootContainerProps) => {
+// external props needed to test this component
+interface RootContainerProps {
+    customCategoryId?: string
+    customSubCatId?: string
+}
+export const RootContainer = ({
+    customSubCatId,
+    customCategoryId,
+}: RootContainerProps) => {
     const location = useLocation()
     const queryParameters = new URLSearchParams(location.search)
 
-    const categoryId = queryParameters.get('categoryId')
-    const subCatId = queryParameters.get('subCatId')
+    const categoryId = queryParameters.get('categoryId') || customCategoryId
+    const subCatId = queryParameters.get('subCatId') || customSubCatId
 
     return (
         <div className="rootApp">
@@ -33,11 +40,20 @@ export const RootContainer = ({}: RootContainerProps) => {
                         display: 'flex',
                     }}>
                     {categoryId && subCatId ? (
-                        <NewsList categoryId={categoryId} subCatId={subCatId} />
+                        <div data-testid="news-cards">
+                            <NewsList
+                                categoryId={categoryId}
+                                subCatId={subCatId}
+                            />
+                        </div>
                     ) : categoryId ? (
-                        <SubCategoryList categoryId={categoryId} />
+                        <div data-testid="sub-category-list">
+                            <SubCategoryList categoryId={categoryId} />
+                        </div>
                     ) : (
-                        <CategoryList />
+                        <div data-testid="category-list">
+                            <CategoryList />
+                        </div>
                     )}
                 </Container>
             </Container>

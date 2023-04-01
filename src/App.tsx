@@ -16,6 +16,10 @@ const router = createBrowserRouter([
 function App() {
     const dispatch = useDispatch()
 
+    /**
+     * this function will fetch the news data from the api
+     * and then dispatch the action to update the store
+     */
     const getNewsData = useCallback(async () => {
         const response = await fetch(
             'https://jsonplaceholder.typicode.com/posts',

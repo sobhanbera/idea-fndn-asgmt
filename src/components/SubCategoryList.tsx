@@ -25,7 +25,9 @@ export function SubCategoryList({categoryId}: SubCategoryListProps) {
             {/* only one news category will match the exact categoryId */}
             {subcategories.map(category => {
                 return (
-                    <Card sx={{minWidth: 275, margin: '20px'}}>
+                    <Card
+                        key={category.id}
+                        sx={{minWidth: 275, margin: '20px'}}>
                         <CardContent>
                             <Typography variant="h5" component="div">
                                 {category.name}
